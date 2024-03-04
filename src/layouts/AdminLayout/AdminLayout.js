@@ -6,7 +6,6 @@ export function AdminLayout(props) {
   return (
     <div>
         <h1>Se está usando el Admin Layout</h1>
-        
         {children}
     </div>
   );

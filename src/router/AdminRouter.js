@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AdminLayout } from "../layouts"
-import { Auth, Users, Blog } from "../pages/admin";
+import { Auth, Users, Blog, Courses, Menu, Newsletter } from "../pages/admin";
 
 const user = null;
 
@@ -17,7 +17,7 @@ export function AdminRouter() {
   return (
     <Routes>
       {!user ? (
-        <Route path="/admin/*" element={loadLayout(AdminLayout, Auth)} />
+        <Route path="/admin/*" element={<Auth/>} />
       ) : (
         <>
         {["/admin", "/admin/blog"].map((path) => (
@@ -29,6 +29,9 @@ export function AdminRouter() {
           />
         ))}
         <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
+        <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
+        <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
+        <Route path="/admin/newsletter" element={loadLayout(AdminLayout, Newsletter)} />
         </>
       )}
     </Routes>
