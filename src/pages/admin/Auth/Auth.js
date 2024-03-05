@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tab } from 'semantic-ui-react';
+import { RegisterForm} from "../../../components/Admin/Auth";
 import { Icon } from "../../../assets/index.js";
 
 export function Auth() {
@@ -14,7 +15,10 @@ export function Auth() {
         },
         {
             menuItem: "Registrarse",
-            render: () => <Tab.Pane>Registrarse</Tab.Pane>
+            render: () => 
+            <Tab.Pane>
+                <RegisterForm openLogin={openLogin}/>
+            </Tab.Pane>
         }
     ]
     return (
