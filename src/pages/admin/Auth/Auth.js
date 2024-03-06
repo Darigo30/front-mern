@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Tab } from 'semantic-ui-react';
-import { RegisterForm} from "../../../components/Admin/Auth";
+import { RegisterForm, LoginForm } from "../../../components/Admin/Auth";
 import { Icon } from "../../../assets/index.js";
 
 export function Auth() {
     
-    const [activeIndex, setActiveIndex] = useState(1)
+    const [activeIndex, setActiveIndex] = useState(0)
     const openLogin = () => setActiveIndex(0)
 
     const panes = [
         {
             menuItem: "Iniciar sesión",
-            render: () => <Tab.Pane>Iniciar sesión</Tab.Pane>
+            render: () => (
+                <Tab.Pane>
+                    <LoginForm />
+                </Tab.Pane>
+            )
         },
         {
             menuItem: "Registrarse",

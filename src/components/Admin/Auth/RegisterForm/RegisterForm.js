@@ -9,6 +9,7 @@ const authController = new Auth();
 export  function RegisterForm(props) {
     const { openLogin } = props;
     const [error, setError] = useState("")
+
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: validationSchema(),
@@ -27,13 +28,36 @@ export  function RegisterForm(props) {
     })
     return (
         <Form onSubmit={formik.handleSubmit}>
-            <Form.Input name="email" type="text" placeholder="Correo electrónico" onChange={formik.handleChange} value={formik.values.email} error={formik.errors.email}/>
-            <Form.Input name="password" type="password" placeholder="Contraseña" onChange={formik.handleChange} value={formik.values.password} error={formik.errors.password}/>
-            <Form.Input name="repeatPassword" type="password" placeholder="Repetir contraseña" onChange={formik.handleChange} value={formik.values.repeatPassword} error={formik.errors.repeatPassword}/>
-            <Form.Checkbox name="condicion" label="Acepto los términos y condiciones"
-            onChange={(_, data) => formik.setFieldValue("condicionAceptada", data.checked)}
-            checked={formik.values.condicionAceptada}
-            error={formik.errors.condicionAceptada}
+            <Form.Input
+            name="email"
+            placeholder="Correo electrónico"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            error={formik.errors.email}
+            />
+            <Form.Input
+            name="password"
+            type="password"
+            placeholder="Contraseña"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            error={formik.errors.password}
+            />
+            <Form.Input
+            name="repeatPassword"
+            type="password"
+            placeholder="Repetir contraseña"
+            onChange={formik.handleChange}
+            value={formik.values.repeatPassword}
+            error={formik.errors.repeatPassword}
+            />
+            <Form.Checkbox
+            name="condicion"
+            label="Acepto los términos y condiciones"
+            onChange={(_, data) => 
+                formik.setFieldValue("condicion", data.checked)}
+            checked={formik.values.condicion}
+            error={formik.errors.condicion}
             />
             
             <Form.Button type='submit' primary fluid loading={formik.isSubmitting}>Registrarse</Form.Button>
