@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Form } from 'semantic-ui-react';
 import { useFormik } from "formik";
+import { Auth } from "../../../../api";
 import { initialValues, validationSchema } from './RegisterForm.form';
 
-export  function RegisterForm() {
+const authController = new Auth();
+
+export  function RegisterForm(props) {
+    const { openLogin } = props;
     const [error, setError] = useState("")
     const formik = useFormik({
         initialValues: initialValues(),
@@ -13,6 +17,8 @@ export  function RegisterForm() {
             try {
                 console.log("este es el form", formValue)
                 setError("")
+                await authController.register(formValue);
+                openLogin();
             } catch (error) {
                 console.log(error)
                 setError("Error al registrar el usuario")
