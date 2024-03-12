@@ -17,6 +17,8 @@ const formik = useFormik({
     onSubmit: async (formValue) => {
         try {
             const response = await authController.login(formValue);
+            authController.setAccessToken(response.access);
+            authController.setRefrehToken(response.refresh);
             login(response.access)
             console.log(response)
         } catch (error) {
