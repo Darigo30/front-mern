@@ -18,12 +18,16 @@ export function AuthProvider(props) {
         (async () => {
             const accessToken = authController.getAccessToken();    
             const refreshToken = authController.getRefreshToken();
+            //TODO: Hacer que funcione cuando se refresca el navegaro, por ende, hay que ver porque el token no está llegando antes de iniciar
+            //al solucionar eso se debe de hacer que el token se refresque cuando expire
+            
             /* eslint-disable no-alert */
-            if (!accessToken || !refreshToken) { 
-                logout();
-                setLoading(false);
-                return;
-            }
+            // if (!accessToken || !refreshToken) { 
+            //     logout();
+            //     setLoading(false);
+            //     return;
+            // }
+            console.log("accessToken en Auth", accessToken) //no está llegando el access token
             /* eslint-disable no-alert */
             // if(hasExpiredToken(accessToken)) { //TODO: aqui está el erorr : Levanvartar el error en casa para el token que tengo en postman 
             //     if(hasExpiredToken(refreshToken)) {

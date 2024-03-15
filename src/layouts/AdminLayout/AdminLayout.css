@@ -1,0 +1,11 @@
+.admin-layout__left{
+    background-color: #173F8A;
+    height: 100vh;
+    padding: 15px;
+    color: white;
+}
+.admin-layout__right-header {
+    background-color: #173F8A;
+    color: white;
+    padding: 15px;
+}

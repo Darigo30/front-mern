@@ -27,7 +27,7 @@ export function Auth() {
     ]
     return (
         <div>
-            <Icon.LogoWhite />
+            <Icon.LogoColor />
             <div>
                 <Tab panes={panes} activeIndex={activeIndex} onTabChange={(_, data) => setActiveIndex(data.activeIndex)}/>
             </div>

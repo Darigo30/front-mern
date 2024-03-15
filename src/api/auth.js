@@ -28,6 +28,7 @@ export class Auth {
     }
 
     async login(data) {
+        console.log("data", data)
         try {
             const url = `${this.baseApi}/${ENV.API_ROUTES.LOGIN}`;
             const params = {
@@ -39,9 +40,11 @@ export class Auth {
             }
 
             const response = await fetch(url, params);
-            const result = await response.json();
+            const result = await response.json(); //esto responde bien el acces token
+            console.log("result en auth - funcion asincrona de login", result)
 
             if (response.status !== 200) throw result;
+            
             return result;
         } catch (error) {
             throw error;
