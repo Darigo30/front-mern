@@ -1,0 +1,12 @@
+.user-form__avatardiv{
+    margin:  0 0 15px;
+    display: flex;
+    justify-content: center;
+}
+.user-form__avatar{
+    width: 100px!important;
+    height: auto;
+    font-size: .92857143rem;
+    border: 1px dotted #2185d0;
+    padding: 4px;
+}
