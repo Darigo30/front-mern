@@ -3,11 +3,17 @@ import { Form, Image } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import { useDropzone } from "react-dropzone";
 import { image } from "../../../../assets";
+import { User } from "../../../../api";
+import { useAuth } from "../../../../hooks";
 import { initialValues, validationSchema } from "./UserForm.form";
 import "./UserForm.css";
 
+const userController = new User();
+
 export function UserForm(props) {
     const { close, onReload, user } = props;
+    
+    const { accessToken } = useAuth();
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -15,6 +21,8 @@ export function UserForm(props) {
         validateOnChange: false,
         onSubmit: async (formValue) => {
             try {
+                await userController.createUser(accessToken, formValue);
+                close();
                 console.log(formValue);
             } catch (error) {
                 console.error(error);
