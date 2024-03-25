@@ -1,0 +1,16 @@
+.item.menuvertical_menu {
+    display: flex!important;
+    color: #fff!important;
+}
+.menuvertical_menu-ico{
+    margin: 0 5px 10px 0!important;
+}
+.ui.vertical.menu > .active.item{
+    background-color: #0176DE!important;
+    color: #fff!important;
+    padding: 10px;
+    border: 0!important;
+}
+.ui.vertical.text.menu .item{
+    padding: 15px 15px!important;
+}

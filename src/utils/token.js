@@ -8,6 +8,7 @@ export const hasExpiredToken = (token) => {
     if (exp <= currenData) {
        // return true
        console.log("El token ha expirado")
+       console.log("exp", exp)
     }
    // return false
     console.log("El token es valido")

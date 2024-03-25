@@ -1,0 +1,15 @@
+.admin-layout__left{
+    background-color: #173F8A;
+    height: 100vh;
+    padding: 30px 0;
+    color: white;
+}
+.admin-layout__logo{
+    width: 60%;
+    margin: 0 15px;
+}
+.admin-layout__right-header {
+    background-color: #173F8A;
+    color: white;
+    padding: 15px;
+}

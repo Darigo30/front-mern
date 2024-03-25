@@ -1,0 +1,7 @@
+.users {
+    padding: 15px;
+}
+.users__button{
+    display: flex;
+    justify-content: end;
+}

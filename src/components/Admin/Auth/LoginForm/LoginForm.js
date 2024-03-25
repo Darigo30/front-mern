@@ -17,10 +17,11 @@ const formik = useFormik({
     onSubmit: async (formValue) => {
         try {
             const response = await authController.login(formValue);
-            authController.setAccessToken(response.access);
+            authController.setAccessToken(response.access); //no esta llegando el access token
             authController.setRefrehToken(response.refresh);
             login(response.access)
-            console.log(response)
+            console.log("access Token en LoginForm",response.access)
+            console.log("refresh en LoginForm",response.refresh)
         } catch (error) {
             console.log(error)
         }
