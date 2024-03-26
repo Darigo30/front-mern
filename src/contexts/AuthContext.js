@@ -56,8 +56,9 @@ export function AuthProvider(props) {
     const login = async (accessToken) => {
        try {
         const response = await userController.getMe(accessToken);
-        delete response.password;
         
+        delete response.password;
+        console.log("token", response)
         setUser(response);
         setToken(accessToken);
        } catch (error) {

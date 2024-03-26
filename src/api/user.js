@@ -5,7 +5,6 @@ export class User {
 
     async getMe(accessToken) {
         try {
-            //const url = `{this.baseApi}/${ENV.API_ROUTES.USER_ME}`;
             const url = `${this.baseApi}/${ENV.API_ROUTES.USER_ME}`;
             console.log("url en user", url)
             const params = {
@@ -18,7 +17,7 @@ export class User {
 
             const result = await response.json(); 
             
-            if (response.status !== 200) {
+            if (response.status !== 201) {
                 console.log("error")  
             }
             console.log("result en user", result) //me está devolviendo token invalido
@@ -57,7 +56,7 @@ export class User {
              throw result;
          }
 
-         return result;
+         console.log("error en create user", error)
 
         } catch (error) {
             throw error;
