@@ -36,9 +36,9 @@ export class User {
              formData.append(key, data[key]);
          });
 
-         if(data.fileAvatar) {
-                formData.append("avatar", data.fileAvatar);
-         }   
+         if(data?.fileAvatar && data?.avatar === "" || data?.avatar === undefined) {
+            formData.append("avatar", data.fileAvatar);
+         }
 
          const url = `${this.baseApi}/${ENV.API_ROUTES.USER}`; 
          const params = {
@@ -51,15 +51,41 @@ export class User {
 
          const response = await fetch(url, params);
          const result = await response.json();
+         console.log("result en create user", result)
 
-         if (response.status !== 201) {
-             throw result;
-         }
-
+         if (response.status !== 201) throw result;
+         
          console.log("error en create user", error)
 
         } catch (error) {
             throw error;
+        }
+    }
+    
+    async getUsers(accessToken, active = undefined) {
+        try {
+            const url = `${this.baseApi}/${ENV.API_ROUTES.USERS}?active=${active}`;
+            const params = {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            };
+    
+            const response = await fetch(url, params);
+            
+            // Verificar si la solicitud fue exitosa
+            if (!response.ok) {
+                throw new Error(`Error al obtener usuarios: ${response.statusText}`);
+            }
+    
+            // Convertir el cuerpo de la respuesta a JSON
+            const data = await response.json();
+    
+            // Devolver los datos obtenidos
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw error; // Re-lanzar el error para que pueda ser manejado por el componente
         }
     }
     

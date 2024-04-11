@@ -20,12 +20,15 @@ export function UserForm(props) {
         validationSchema: validationSchema(),
         validateOnChange: false,
         onSubmit: async (formValue) => {
+            console.log(formValue,"formValue");
             try {
                 await userController.createUser(accessToken, formValue);
+                onReload();
                 close();
                 console.log(formValue);
             } catch (error) {
-                console.error(error);
+                close();
+               console.log("error", error);
             }
         }
     });
@@ -33,6 +36,7 @@ export function UserForm(props) {
 
     const onDrop = useCallback(acceptedFiles => {
       const file = acceptedFiles[0];
+      console.log(file,'file');
         formik.setFieldValue("avatar", URL.createObjectURL(file));
         formik.setFieldValue("fileAvatar", file);
     });
@@ -51,7 +55,7 @@ export function UserForm(props) {
 
     return (
         <Form className='user-form' onSubmit={formik.handleSubmit}>
-            <div className='user-form__avatardiv' {...getRootProps()}>
+             <div className='user-form__avatardiv' {...getRootProps()}>
                 <input {...getInputProps()} />
                 <Image className='user-form__avatar' avatar size="small" src={getAvatar()} />
             </div>
