@@ -1,33 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Button, Icon, Confirm } from "semantic-ui-react";
 import { image } from "../../../../assets";
 import { ENV } from "../../../../utils";
 import { BasicModal} from "../../../Shared";
+import { User } from "../../../../api";
+import { useAuth } from "../../../../hooks";    
 import { UserForm } from "../UseForm";
 import "./userItem.css";
 
+const userController = new User();
+
 export function UserItem (props) {
 const { user, onReload } = props;
+const { accessToken } = useAuth();
 
-const [showModal, setShowModal] = React.useState(false);
-const [titleModal, setTitleModal] = React.useState("");
+const [showModal, setShowModal] = useState(false);
+const [titleModal, setTitleModal] = useState("");
 
 const [showConfirm, setShowConfirm] = useState(false);
 const [confirmMessage, setConfirmMessage] = useState("");
 const [isDelete, setIsDelete] = useState(false);
 
 
-const openCloseModal = () => setShowModal((prevState) => !prevState);
+const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
 const onOpenCloseCOnfirm = () => setShowConfirm((prevState) => !prevState);
 
 const openUpdateUser = () => {
     setTitleModal(`Actualizar usuario ${user.email}`);
-    openCloseModal();
-}
-const onActivateDeactivate = () => {
-    console.log("activar")
+    onOpenCloseModal();
 }
 
+
+const openDesactivateConfirm = () => {
+    setIsDelete(false);
+    setConfirmMessage(
+        user.active
+        ? `Desactivar usuario ${user.email}`
+        : `Activar usuario ${user.email}`
+    );
+    onOpenCloseCOnfirm();
+}
+
+const onActivateDeactivate = async () => {
+    try {
+        await userController.updateUser(accessToken, user._id,{ 
+            active: !user.active 
+        });
+        onReload();
+        onOpenCloseCOnfirm();
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+const openDeleteConfirm = () => {
+    setIsDelete(true);
+    setConfirmMessage(`Eliminar usuario ${user.email}`);
+    onOpenCloseCOnfirm();
+}
+
+
+const onDelete = async () => {
+    try {
+        await userController.deleteUser(accessToken, user._id);
+        onReload();
+        onOpenCloseCOnfirm();
+    } catch (error) {
+        console.error(error)
+    }
+}
 
   return (
     <>
@@ -43,19 +85,22 @@ const onActivateDeactivate = () => {
             <Button icon primary onClick={openUpdateUser}>
                 <Icon name="pencil" />
             </Button>
-            <Button icon color={user.active ? "orange" : "teal"}>
+            <Button icon color={user.active ? "orange" : "teal"} onClick={openDesactivateConfirm}>
                 <Icon name={user.active ? "ban" : "check"}/>
             </Button>
-            <Button icon color="red">
+            <Button icon color="red" onClick={openDeleteConfirm}>
                 <Icon name="trash" />
             </Button>
         </div>
     </div>
-        <BasicModal show={showModal} close={openCloseModal} title={titleModal}>
-            <UserForm close={openCloseModal} onReload={onReload} user ={user} />
+        <BasicModal show={showModal} close={onOpenCloseModal} title={titleModal}>
+            <UserForm close={onOpenCloseModal} onReload={onReload} user ={user} />
         </BasicModal>
         
-        <Confirm onOpen={showConfirm} onCancel={onOpenCloseCOnfirm} onConfirm={isDelete ? () => console.log("confirmar borrar") : "activodesactivo"} content={confirmMessage} size="mini" />
+        <Confirm
+        open={showConfirm}
+        onCancel={onOpenCloseCOnfirm}
+        onConfirm={isDelete ? onDelete : onActivateDeactivate } content={confirmMessage} size="mini" />
     </>
   );
 }
