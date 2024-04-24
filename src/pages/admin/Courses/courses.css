@@ -1,0 +1,7 @@
+.courses {
+    padding: 15px;
+}
+.courses__button{
+    display: flex;
+    justify-content: end;
+}
