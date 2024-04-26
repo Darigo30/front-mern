@@ -21,7 +21,7 @@ export function Courses () {
 
   return (
     <>
-      <div className="courses__button">
+      <div className="courses__button mt-20 mr-16">
         <Button className="users__button" primary onClick={onOpenCloseModal}>
           Nuevo Curso
         </Button>
