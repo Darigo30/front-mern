@@ -9,21 +9,34 @@ const courseCOntroller = new Course();
 
 export function ListCourses() {
     const [courses, setCourses] = useState(false);
+     const [page, setPage] = useState(1);
+     const [pagination, setPagination] = useState();
 
     useEffect(() => {
         (async () => {
             try {
-                const repsonse = await courseCOntroller.getCourses();
+                const repsonse = await courseCOntroller.getCourses({page, limit: 1});
                 setCourses(repsonse.docs);
+                setPagination({
+                    limit: repsonse.limit,
+                    page: repsonse.page,
+                    pages: repsonse.pages,
+                    total: repsonse.total
+                });
             } catch (error) {
                 console.error(error);
             }
         })();
-    }, []);
+    }, [page]);
 
 
-    if(!courses) return < active inline="centered" />;
-    if(!size(courses)) return "No hay cursos creados"
+    const changePage = (_, data) => {
+        console.log(data);
+        setPage(data.activePage);
+    }
+
+    if(!courses) return <Loader active inline="centered" />;
+    if(!size(courses) === 0) return "No hay cursos creados"
 
     return (
         <div>
@@ -32,12 +45,12 @@ export function ListCourses() {
             ))}
 
             <Pagination 
-            totalPages={20}
-            defaultActivePage={1}
+            totalPages={20} // colocar pagination.page cuando agregues mas cursos
+            defaultActivePage={pagination.page}
             ellipsisItem={null}
             firstItem={null}
             lastItem={null}
-            onPageChange={(e, data) => console.log('pagina cambiada')}
+            onPageChange={changePage}
             />
         </div>
     );

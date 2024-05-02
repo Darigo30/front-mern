@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Tab, Button } from "semantic-ui-react";
 import { BasicModal } from "../../../components/Shared";
-import {ListCourses } from "../../../components/Admin/Course"
+import {ListCourses, CourseForm } from "../../../components/Admin/Course";
+
+
 import "./courses.css";
 
 export function Courses () {
@@ -34,7 +36,7 @@ export function Courses () {
         close={onOpenCloseModal}
         title="Crear nuevo curso"
         >
-          <p>Formilario para crear curso</p>
+          <CourseForm onClose= {onOpenCloseModal}/>
       </BasicModal>
 
     </>
