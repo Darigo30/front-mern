@@ -2,21 +2,30 @@ import React, { useCallback } from "react";
 import { Form, Image } from "semantic-ui-react";
 import { useDropzone } from "react-dropzone";
 import { useFormik } from "formik";
+import { Course } from "../../../../api";
+import { useAuth } from "../../../../hooks";
 import { initialValues, validationSchema } from "./CourseForm.form";
 
-
+const courseController = new Course();
 
 export function CourseForm() {
+    const { accessToken } = useAuth();  
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: validationSchema(),
         validateOnChange: false,
-        onSubmit: async (formValue) => {
+        onSubmit: async (formValue, { setSubmitting, setErrors }) => {
             try {
-                console.log(formValue);
+                const result = await courseController.createCourse(accessToken, formValue);
+                console.log("curso creado", result);
+                // Implementar lógica para cerrar modal y refrescar lista aquí
             } catch (error) {
-                console.error(error);
+                console.error("Error al crear curso:", error);
+                setErrors({ submit: error.message || "Error desconocido" });
+                // Mostrar un mensaje de error en la interfaz
+            } finally {
+                setSubmitting(false);
             }
         },
     });
@@ -78,7 +87,7 @@ export function CourseForm() {
                     error={formik.errors.discount}
                 />
             </Form.Group>
-            <Form.Button type="submit" primary fluid loading={formik.isSubmitting}>Crear curso</Form.Button>
+            <Form.Button type="submit" primary fluid loading={formik.isSubmitting}> Crear curso </Form.Button>
         </Form>
     );
 }

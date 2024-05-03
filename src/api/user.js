@@ -54,8 +54,7 @@ export class User {
          console.log("result en create user", result)
 
          if (response.status !== 201) throw result;
-         
-         console.log("error en create user", error)
+         return result;
 
         } catch (error) {
             throw error;
